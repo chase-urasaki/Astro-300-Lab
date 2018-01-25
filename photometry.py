@@ -59,7 +59,7 @@ def imagePlot(rawImage, X, Y, X1, Y1, XY):
     pyplot.show()
     pyplot.close()
 
-#The region about bg pixels that are to the left and below our aperture
+#The region about background pixels that are to the left and below our aperture
 bg = 47
 
 image = hdulist[0].data
@@ -75,7 +75,7 @@ bkgAp = image[pixDEC+bg-12:pixDEC+bg+12,pixRA+bg-12:pixRA+bg+12]
 meanBkg = np.mean(bkgAp)
 medianBkg = np.median(bkgAp)
 
-#Compare both the mean and median to see which gives the better result. 
+#Compare both the mean and median to see which gives the better result.Soome basic statistical ideas will come into play here, as the median does not factor in 'outliers' in the data. But if you are just seeking the easy way out, then the mean suffices just as fine.  
 meanBkg, medianBkg
 
 #Target star's aperture
@@ -103,17 +103,23 @@ totalcountref = np.sum(RefcorAp)
 
 totalelectronsRef = totalcountref*gain
 ErrorRef = np.sqrt(totalelectronsRef)
+
+#In the following line, I am telling Python to print on screen the following in this form.
 print('For reference {0:8.2f} +/- {1:6.2f} electrons on MJD:{2:9.3f}'.format(totalelectronsRef,ErrorRef, date)) 
 
-#Now we want to find the magnitude of the star.
+#Now we want to find the magnitude of the star. We know that the magnitude of the reference star is 13.5 so we will assign a variable.
 m_ref = 13.5
+
+#The following formula is just the definition of the magnitude of the star. 
 m = -2.5*np.log10(totalElectrons/totalelectronsRef) + m_ref
 
 #To find the error in this star, we use the following formula
-#We first define the following varables to make it a bit easier
+#But we first define the following varables to make it a bit easier
 Uncertainty_tar = Error/totalElectrons
 Uncertainty_ref = ErrorRef/totalelectronsRef
 
 delm = (-2.5/np.log(10))*np.sqrt(Uncertainty_tar**2 + Uncertainty_ref**2)
+
+#Last but certainly not least, the moment you've all been waiting for: the magnitude of our target star and it's uncertainty in measurement (found by error propagation!
 print('Magnitude of the target star is {0:5.5f} +/- {1:5.5f}'.format(m, delm))
 
