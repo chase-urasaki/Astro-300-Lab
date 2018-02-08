@@ -1,7 +1,7 @@
 # coding: utf-8
 #Photometry is the procedure of measuring the brightness of objects (usually stars or galaxies) in the nighttime sky. There are a number of possible programs and procedures to use, such as IDL, but we'll use python. In this case, we are comparing the flux of a star with that of a reference star whose magnitude we already know. Therefore, we will be taking the 'fluxes' of these two stars and using the ratio etween them to find out the magnitude of the target star. You will see them represented as the reference star (or ref) and the target star (tar).
 #First we want to start by importing our necessary libraries
-import numpy as np
+import numpy as np 
 from matplotlib import pyplot
 from matplotlib import patches
 from astropy.io import fits
